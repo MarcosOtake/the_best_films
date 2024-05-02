@@ -41,3 +41,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Environment
+#.env/ #TODO -> descomentar .env arquivo após testes
+
+#Dev Configs
+.fvm
+.vscode/settings.json
+

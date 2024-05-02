@@ -1,6 +1,6 @@
-# the_best_films
+#Flutter Projeto the_best_films
 
-A new Flutter project.
+Projeto para consumo de api de filmes.
 
 ## Getting Started
 

@@ -5,7 +5,6 @@ import '../config/env/env.dart';
 class MovieDetailModel {
   final String? backdropPath;
   final int? id;
-  final List<String>? originCountry;
   final String? originalTitle;
   final String? overview;
   final double? popularity;
@@ -17,7 +16,6 @@ class MovieDetailModel {
   MovieDetailModel({
     this.backdropPath,
     this.id,
-    this.originCountry,
     this.originalTitle,
     this.overview,
     this.popularity,
@@ -28,22 +26,21 @@ class MovieDetailModel {
   });
 
   factory MovieDetailModel.fromMap(Map<String, dynamic> map) {
+    final movieCredis = map['credits']['cast'];
+    final listCredits = <MovieCreditsModel>[];
+    for (var element in movieCredis) {
+      listCredits.add(MovieCreditsModel.fromMap(element));
+    }
     return MovieDetailModel(
       backdropPath: '${Env.urlImage}${map['backdrop_path']}',
       id: map['id']?.toInt(),
-      originCountry: List<String>.from(map['origin_country']),
       originalTitle: map['original_title'],
       overview: map['overview'],
       popularity: map['popularity']?.toDouble(),
       posterPath: map['poster_path'],
       voteAverage: map['vote_average']?.toDouble(),
       voteCount: map['vote_count']?.toInt(),
-      credits: List<MovieCreditsModel>.from(
-          map['credits']['cast']?.map((x) => MovieCreditsModel.fromMap(x)) ??
-              const []),
+      credits: listCredits,
     );
   }
-
-  factory MovieDetailModel.fromJson(String source) =>
-      MovieDetailModel.fromMap(json.decode(source));
 }

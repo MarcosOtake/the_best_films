@@ -5,12 +5,12 @@ import 'package:the_best_films/app/ui/styles/app_text_styles.dart';
 
 class MovieCard extends StatelessWidget {
   final String labelName;
-  final String ranking;
+  final String? ranking;
   final String imageUrl;
   const MovieCard({
     super.key,
     required this.labelName,
-    required this.ranking,
+    this.ranking,
     required this.imageUrl,
   });
 
@@ -29,6 +29,7 @@ class MovieCard extends StatelessWidget {
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
             children: [
               ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -39,6 +40,17 @@ class MovieCard extends StatelessWidget {
                 child: FadeInImage.assetNetwork(
                   placeholder: 'assets/animations/loading.gif',
                   placeholderColorBlendMode: BlendMode.darken,
+                  imageErrorBuilder: (context, error, stackTrace) {
+                    return const SizedBox(
+                      width: 150,
+                      height: 200,
+                      child: Icon(
+                        Icons.question_mark,
+                        size: 60,
+                        color: AppColors.colorsGrey,
+                      ),
+                    );
+                  },
                   image: imageUrl,
                   height: context.screenHeight * .28,
                   width: context.screenWidth * .45,
@@ -46,38 +58,42 @@ class MovieCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  labelName,
-                  style: AppTextStyle.smallText,
-                  textAlign: TextAlign.start,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    labelName,
+                    style: AppTextStyle.smallText,
+                    textAlign: TextAlign.start,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
               const SizedBox(height: 6),
             ],
           ),
-          Positioned(
-            left: 8,
-            bottom: 50,
-            child: CircleAvatar(
-              radius: 22,
-              backgroundColor: AppColors.colorsGrey,
-              child: CircleAvatar(
-                radius: 20,
-                backgroundColor: AppColors.colorsBlack,
-                child: Text(
-                  ranking,
-                  style: const TextStyle(
-                    color: AppColors.colorsWhite,
-                    fontWeight: FontWeight.bold,
+          ranking == null
+              ? const SizedBox.shrink()
+              : Positioned(
+                  left: 8,
+                  bottom: 50,
+                  child: CircleAvatar(
+                    radius: 22,
+                    backgroundColor: AppColors.colorsGrey,
+                    child: CircleAvatar(
+                      radius: 20,
+                      backgroundColor: AppColors.colorsBlack,
+                      child: Text(
+                        ranking!,
+                        style: const TextStyle(
+                          color: AppColors.colorsWhite,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
         ],
       ),
     );

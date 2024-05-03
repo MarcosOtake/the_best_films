@@ -19,7 +19,4 @@ class MovieCreditsModel {
       profilePath: '${Env.urlImage}${map['profile_path']}',
     );
   }
-
-  factory MovieCreditsModel.fromJson(String source) =>
-      MovieCreditsModel.fromMap(json.decode(source));
 }

@@ -18,12 +18,8 @@ class MovieDetailsRepositoryImpl implements MovieDetailsRepository {
           'include_image_language': 'en,pt-br'
         },
       );
-      final details = result.data
-          .map<MovieDetailModel>((d) => MovieDetailModel.fromMap(d))
-          .toList();
-
-      return details;
-    } on Exception catch (e, s) {
+      return MovieDetailModel.fromMap(result.data);
+    } catch (e, s) {
       log('Erro ao recuperar detalhes do filme', error: e, stackTrace: s);
     }
     return null;
